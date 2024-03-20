@@ -1,5 +1,7 @@
 package com.guy.gonenapp;
 
+import java.util.LinkedList;
+
 public class Record {
 
     int type;
@@ -7,10 +9,10 @@ public class Record {
     int msTime;
     int lengthOfRecord;
     int packetIndex;
-    int channelMapping;
+    int[] channelMapping = new int[16];
     int samplingRate;
     int downSamplingFactor;
-    int[] data;
+    LinkedList<Integer>[] data = new LinkedList[16];
 
     public Record() {}
 }
