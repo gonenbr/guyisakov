@@ -12,6 +12,9 @@ import java.util.LinkedList;
 
 public class DataManager {
 
+    public interface CallBack_Data {
+        void newRecord(Record record);
+    }
     public static ArrayList<Record> readData2(Context context, String fileName) {
         ArrayList<Record> records = new ArrayList<>();
         try {
@@ -41,7 +44,7 @@ public class DataManager {
                             }
 //                            processStr(temp);
                             stream.clear();
-                            Log.d("pttt", "index: " + index++);
+                            //Log.d("pttt", "index: " + index++);
                             continue;
                         } else if (out && buffer[i] != 0) {
                             out = false;
@@ -71,7 +74,7 @@ public class DataManager {
         return records;
     }
 
-    public static ArrayList<Record> readData(Context context, String fileName) {
+    public static ArrayList<Record> readData(Context context, String fileName, CallBack_Data callBackData) {
         ArrayList<Record> records = new ArrayList<>();
         try {
             InputStream inputStream = context.getAssets().open(fileName);
@@ -106,8 +109,9 @@ public class DataManager {
                     } else if (currentLengthOfRecord >= 0) {
                         if (stream.size() >= (9 + currentLengthOfRecord)) {
                             Record record = processRecord(stream);
-                            Log.d("pttt", "" + index++);
+                            //Log.d("pttt", "" + index++);
                             if (record != null  &&  record.type == 160) {
+                                callBackData.newRecord(record);
                                 records.add(record);
                             }
                             temp.clear();

@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         panel_LST_channels = findViewById(R.id.panel_LST_channels);
 
         for (int i = 0; i < 16; i++) {
-            channels.add(new Channel().setTitle("" + i));
+            channels.add(new Channel().setTitle("Channel " + (i + 1)));
         }
 
         adapterChannel = new Adapter_Channel(channels);
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         panel_LST_channels.setLayoutManager(layoutManager);
         panel_LST_channels.setAdapter(adapterChannel);
 
-        (findViewById(R.id.start)).setOnClickListener(v -> start());
+        (findViewById(R.id.panel_FAB_action)).setOnClickListener(v -> start());
     }
 
     private void tick() {
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void done() {
             }
-        }, 1000, SPEED, "cycle");
+        }, MCT6.CONTINUOUSLY_REPEATS, SPEED, "cycle");
         Intent intent = new Intent(this, ServiceData.class);
         intent.setAction(ServiceData.ServiceData_ACTION_START);
         startService(intent);

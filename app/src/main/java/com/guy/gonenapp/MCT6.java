@@ -2,8 +2,10 @@ package com.guy.gonenapp;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -103,13 +105,23 @@ public class MCT6 {
             // send done function second after last call
             if (IM_DONE) {
                 if (cycleTickerCallback != null) {
-                    handler.post(() -> cycleTickerCallback.done());
+                    try {
+                        handler.post(() -> cycleTickerCallback.done());
+                    } catch (NullPointerException ex) {
+                        ex.printStackTrace();
+                        handler = new Handler(Looper.getMainLooper());
+                    }
                 }
                 killMe();
             }
             else {
                 if (cycleTickerCallback != null) {
-                    handler.post(() -> cycleTickerCallback.secondly(repeats));
+                    try {
+                        handler.post(() -> cycleTickerCallback.secondly(repeats));
+                    } catch (NullPointerException ex) {
+                        ex.printStackTrace();
+                        handler = new Handler(Looper.getMainLooper());
+                    }
                 }
                 if (!(repeats == CONTINUOUSLY_REPEATS)) {
                     repeats--;
