@@ -3,7 +3,7 @@ package com.guy.gonenapp;
 public class Record {
 
     int type;
-    int unixTime;
+    long unixTime;
     int msTime;
     int lengthOfRecord;
     int packetIndex;
